@@ -7,7 +7,10 @@ from flask import current_app
 
 from api.utils.errors import ValidationError, DatabaseProcessError, UnavailableContentError
 
+conn = r.connect(db='papers')
+
 class RethinkDBModel(object):
+
     @classmethod
     def find(cls, id):
         return r.table(cls._table).get(id).run(conn)

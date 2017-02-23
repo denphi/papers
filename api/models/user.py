@@ -11,9 +11,9 @@ from flask import current_app
 
 from api.utils.errors import ValidationError, DatabaseProcessError, UnavailableContentError
 
-conn = r.connect(db="papers")
-
 from api.models.RethinkDBModel import RethinkDBModel
+
+conn = r.connect(db='papers')
 
 class User(RethinkDBModel):
     _table = 'users'

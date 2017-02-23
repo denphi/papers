@@ -9,6 +9,8 @@ from flask import current_app
 
 from api.models.RethinkDBModel import RethinkDBModel
 
+conn = r.connect(db='papers')
+
 class File(RethinkDBModel):
     _table = 'files'
 

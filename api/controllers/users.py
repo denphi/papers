@@ -28,5 +28,5 @@ class List(Resource):
     def get(self):
         try:
             return User.get_all()
-        except:
+        except Exception as e:
             abort(400, message="Error getting all users -> {0}".format(e))

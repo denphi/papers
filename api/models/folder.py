@@ -12,6 +12,8 @@ from flask import current_app
 from api.models.RethinkDBModel import RethinkDBModel
 from api.models.file import File
 
+conn = r.connect(db='papers')
+
 class Folder(File):
     @classmethod
     def create(cls, **kwargs):
