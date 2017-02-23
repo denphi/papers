@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint
 from flask_restful import Api
+from flask_cors import CORS, cross_origin
 
 from api.controllers import auth, files, users
 from config import config
@@ -7,6 +8,7 @@ from config import config
 def create_app(env):
     app = Flask(__name__)
     app.config.from_object(config[env])
+    CORS(app)
 
     # Start api/v1 Blueprint
     api_bp = Blueprint('api', __name__)

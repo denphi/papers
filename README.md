@@ -20,8 +20,10 @@ e.g. <http://virtualenvwrapper.readthedocs.io/en/latest/install.html>
 > Create and activate
 
 ~~~
-virtualenv venv
+virtualenv -p python3.6 venv
+~~~
 
+~~~
 source venv/bin/activate
 ~~~
 
