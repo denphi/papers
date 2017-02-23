@@ -8,12 +8,12 @@ class AuthLogin(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('email', type=str, help='You need to enter your e-mail address', required=True)
         parser.add_argument('password', type=str, help='You need to enter your password', required=True)
-        
+
         args = parser.parse_args()
-        
+
         email = args.get('email')
         password = args.get('password')
-        
+
         try:
             token = User.validate(email, password)
             return {'token': token}
@@ -27,14 +27,14 @@ class AuthRegister(Resource):
         parser.add_argument('email', type=str, help='You need to enter your e-mail address', required=True)
         parser.add_argument('password', type=str, help='You need to enter your chosen password', required=True)
         parser.add_argument('password_conf', type=str, help='You need to enter the confirm password field', required=True)
-        
+
         args = parser.parse_args()
-        
+
         email = args.get('email')
         password = args.get('password')
         password_conf = args.get('password_conf')
         fullname = args.get('fullname')
-        
+
         try:
             User.create(
                 email=email,

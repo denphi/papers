@@ -89,6 +89,10 @@ class User(RethinkDBModel):
         else:
             raise ValidationError("The password you inputed was incorrect.")
 
+    @classmethod
+    def get_all(cls):
+        return list(r.table(cls._table).run(conn))
+
     @staticmethod
     def hash_password(password):
         return pbkdf2_sha256.encrypt(password, rounds=200000, salt_size=16)
@@ -212,8 +216,10 @@ class Folder(File):
         p = {}
         update_fields = folder['objects'] or []
         update_fields.append(object_id)
+
         if is_folder:
             p['last_index'] = folder['last_index'] + 1
+
         p['objects'] = update_fields
         cls.update(folder['id'], p)
 

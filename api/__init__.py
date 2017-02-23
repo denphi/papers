@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint
 from flask_restful import Api
 
-from api.controllers import auth, files
+from api.controllers import auth, files, users
 from config import config
 
 def create_app(env):
@@ -14,8 +14,9 @@ def create_app(env):
 
     api.add_resource(auth.AuthLogin, '/auth/login')
     api.add_resource(auth.AuthRegister, '/auth/register')
-    api.add_resource(files.CreateList, '/users/<user_id>/files')
-    api.add_resource(files.ViewEditDelete, '/users/<user_id>/files/<file_id>')
+    api.add_resource(files.CreateList, '/files')
+    api.add_resource(files.ViewEditDelete, '/files/<string:file_id>')
+    api.add_resource(users.List, '/users')
 
     app.register_blueprint(api_bp, url_prefix="/api/v1")
     # End api/v1 Blueprint
