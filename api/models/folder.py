@@ -10,6 +10,7 @@ from passlib.hash import pbkdf2_sha256
 from flask import current_app
 
 from api.models.RethinkDBModel import RethinkDBModel
+from api.models.file import File
 
 class Folder(File):
     @classmethod

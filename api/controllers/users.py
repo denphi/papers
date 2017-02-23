@@ -14,6 +14,7 @@ address_serializer = {
 }
 
 user_serializer = {
+    'id': fields.String,
     'fullname': fields.String,
     'email': fields.String,
     'address': fields.Nested(address_serializer),

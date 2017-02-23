@@ -7,7 +7,8 @@ from functools import wraps
 from flask import current_app, request, g
 from flask_restful import abort
 
-from api.models import User, File
+from api.models.user import User
+from api.models.file import File
 
 def _decode_jwt():
     token = request.headers.get('authorization').strip()

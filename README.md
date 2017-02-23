@@ -138,6 +138,14 @@ curl -X POST http://127.0.0.1:5000/api/v1/auth/register -d "fullname=temp" -d "e
 curl -X POST http://127.0.0.1:5000/api/v1/auth/register -d "fullname=temp" -d "email=jon.smith@test.com" -d "password=temp123" -d "password_conf=temp123" -d "street_number=128" -d "route=" -d "locality=GLH" -d "postal_town=London" -d "administrative_area_level_2=Camden" -d "administrative_area_level_1=England" -d "country=United Kingdom" -d "postal_code=NW3 3JJ"
 ~~~
 
+> Results
+
+~~~
+{
+    "message": "Successfully created your account."
+}
+~~~
+
 ### Login
 
 > Form
