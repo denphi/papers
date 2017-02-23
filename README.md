@@ -34,7 +34,7 @@ deactivate
 ### Install requirements
 
 ~~~
-pip install -r requirements.txt
+pip3.6 install -r requirements.txt
 ~~~
 
 ### Install RethinkDB
@@ -60,13 +60,13 @@ rethinkdb
 ### Create Database
 
 ~~~
-python run.py migrate
+python3.6 run.py migrate
 ~~~
 
 ### Run Applications
 
 ~~~
-python run.py runserver
+python3.6 run.py runserver
 ~~~
 
 ### Run Argument
@@ -130,6 +130,12 @@ curl -X POST http://127.0.0.1:5000/api/v1/auth/register -d "fullname=temp" -d "e
 {
     "message": "Successfully created your account."
 }
+~~~
+
+### Create User, with address
+
+~~~
+curl -X POST http://127.0.0.1:5000/api/v1/auth/register -d "fullname=temp" -d "email=jon.smith@test.com" -d "password=temp123" -d "password_conf=temp123" -d "street_number=128" -d "route=" -d "locality=GLH" -d "postal_town=London" -d "administrative_area_level_2=Camden" -d "administrative_area_level_1=England" -d "country=United Kingdom" -d "postal_code=NW3 3JJ"
 ~~~
 
 ### Login

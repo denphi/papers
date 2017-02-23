@@ -36,7 +36,7 @@ def login_required(f):
                 abort(404, message="The user id is invalid")
             return f(*args, **kwargs)
         except JWTError as e:
-            abort(400, message="There was a problem while trying to parse your token -> {}".format(e.message))
+            abort(400, message="There was a problem while trying to parse your token -> {0}".format(e))
     return func
 
 def validate_user(f):

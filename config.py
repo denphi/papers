@@ -1,5 +1,5 @@
 class Config(object):
-    DEBUG = True
+    DEBUG = False
     TESTING = False
     DATABASE_NAME = "papers"
     UPLOAD_FOLDER = 'upload/'
@@ -8,6 +8,8 @@ class Config(object):
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 class DevelopmentConfig(Config):
+    DEBUG = True
+
     SECRET_KEY = "S0m3S3cr3tK3y"
 
 config = {

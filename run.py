@@ -23,7 +23,7 @@ def migrate():
         # Create Tables
         if db_name not in r.db_list().run(conn):
             db = r.db_create(db_name).run(conn)
-            print "Created database '{}'...".format(db_name)
+            print("Created database '{0}'...".format(db_name))
 
         # Create the application tables if they do not exist
         lib = importlib.import_module('api.models')
@@ -32,10 +32,10 @@ def migrate():
                 if base.__name__ == "RethinkDBModel":
                     table_name = getattr(cls[1], '_table')
                     r.db(db_name).table_create(table_name).run(conn)
-                    print "Created table '{}'...".format(table_name)
-        print "Running RethinkDB migration command"
+                    print("Created table '{0}'...".format(table_name))
+        print("Running RethinkDB migration command")
     except Exception as e:
-        cprint("An error occured --> {}".format(e.message), 'red', attrs=['bold'])
+        cprint("An error occured --> {0}".format(e), 'red', attrs=['bold'])
 
 @manager.command
 def drop_db():
@@ -48,7 +48,7 @@ def drop_db():
         if db_name in r.db_list().run(conn):
             r.db_drop(db_name).run(conn)
     except Exception as e:
-        cprint("An error occured --> {}".format(e.message), 'red', attrs=['bold'])
+        cprint("An error occured --> {0}".format(e), 'red', attrs=['bold'])
 
 if __name__ == '__main__':
     manager.run()

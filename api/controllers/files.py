@@ -5,7 +5,8 @@ from flask import current_app, request, g, send_from_directory
 from flask_restful import reqparse, abort, Resource, fields, marshal_with
 from werkzeug import secure_filename
 
-from api.models import File, Folder
+from api.models.file import File
+from api.models.folder import Folder
 from api.utils.decorators import login_required, validate_user, belongs_to_user
 
 BASE_DIR = os.path.abspath(
@@ -50,7 +51,7 @@ class CreateList(Resource):
         try:
             return File.filter({'creator': g.user_id})
         except Exception as e:
-            abort(500, message="There was an error while trying to get your files --> {}".format(e.message))
+            abort(500, message="There was an error while trying to get your files --> {0}".format(e))
 
     @login_required
     @validate_user
@@ -95,10 +96,10 @@ class CreateList(Resource):
 
                 if files:
                     if not is_allowed(files.filename):
-                        raise Exception("File not allowed: {}".format(files.filename))
+                        raise Exception("File not allowed: {0}".format(files.filename))
 
                     _path = os.path.join(current_app.config['UPLOAD_FOLDER'], g.user_id)
-                    _dir = os.path.join(BASE_DIR, '{}/'.format(_path))
+                    _dir = os.path.join(BASE_DIR, "{0}/".format(_path))
 
                     if not os.path.isdir(_dir):
                         os.mkdir(_dir)
@@ -106,7 +107,7 @@ class CreateList(Resource):
                     filename = secure_filename(files.filename)
                     to_path = os.path.join(_dir, filename)
                     files.save(to_path)
-                    fileuri = os.path.join('{}/'.format(_path), filename)
+                    fileuri = os.path.join("{0}/".format(_path), filename)
                     filesize = os.path.getsize(to_path)
 
                     return File.create(
@@ -119,7 +120,7 @@ class CreateList(Resource):
                 raise Exception("You did not supply a valid file in your request")
 
         except Exception as e:
-            abort(500, message="There was an error while processing your request --> {}".format(e.message))
+            abort(500, message="There was an error while processing your request --> {0}".format(e))
 
 class ViewEditDelete(Resource):
     @login_required
@@ -134,7 +135,7 @@ class ViewEditDelete(Resource):
                 return send_from_directory(directory=parts[0], filename=parts[1])
             return g.file
         except Exception as e:
-            abort(500, message="There was an while processing your request --> {}".format(e.message))
+            abort(500, message="There was an while processing your request --> {0}".format(e))
 
     @login_required
     @validate_user
@@ -163,7 +164,7 @@ class ViewEditDelete(Resource):
                         abort(404, message="You don't have access to the folder you're trying to move this object to")
 
                 if g.file['is_folder']:
-                    update_fields['tag'] = g.file['id'] if parent_id == '0' else '{}#{}'.format(folder_access['tag'], folder['last_index'])
+                    update_fields['tag'] = g.file['id'] if parent_id == '0' else "{0}#{1}".format(folder_access['tag'], folder['last_index'])
                     Folder.move(g.file, folder_access)
                 else:
                     File.move(g.file, folder_access)
@@ -177,7 +178,7 @@ class ViewEditDelete(Resource):
 
             return File.find(file_id)
         except Exception as e:
-            abort(500, message="There was an while processing your request --> {}".format(e.message))
+            abort(500, message="There was an while processing your request --> {0}".format(e))
 
     @login_required
     @validate_user
@@ -204,4 +205,4 @@ class ViewEditDelete(Resource):
                     File.update({'parent_id': file_id}, {'status': False})
             return "File has been deleted successfully", 204
         except:
-            abort(500, message="There was an error while processing your request --> {}".format(e.message))
+            abort(500, message="There was an error while processing your request --> {0}".format(e))
