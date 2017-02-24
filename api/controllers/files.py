@@ -25,6 +25,8 @@ file_array_serializer = {
     'is_folder': fields.Boolean,
     'parent_id': fields.String,
     'creator': fields.String,
+    'site_name': fields.String,
+    'url': fields.String,
     'date_created': fields.DateTime(dt_format='rfc822'),
     'date_modified': fields.DateTime(dt_format='rfc822')
 }
@@ -34,7 +36,7 @@ file_serializer = {
     'name': fields.String,
     'size': fields.Integer,
     'uri': fields.String,
-    'siteName': fields.String,
+    'site_name': fields.String,
     'url': fields.String,
     'is_folder': fields.Boolean,
     'objects': fields.Nested(file_array_serializer, default=[]),
@@ -113,7 +115,8 @@ class CreateList(Resource):
                     if not os.path.isdir(_dir):
                         os.mkdir(_dir)
 
-                    filename = secure_filename(files.filename)
+                    filetitle, fileext = os.path.splitext(files.filename)
+                    filename = secure_filename("{0}_{1}{2}".format(filetitle, rand_str(10), fileext))
                     to_path = os.path.join(_dir, filename)
                     files.save(to_path)
                     fileuri = os.path.join("{0}/".format(_path), filename)
@@ -144,13 +147,13 @@ class Upload(Resource):
         try:
             parser = reqparse.RequestParser()
             parser.add_argument('image_data', type=str, help="Image Base, base64 format")
-            parser.add_argument('name', type=str, help="Site Title")
+            parser.add_argument('site_name', type=str, help="Site Title")
             parser.add_argument('url', type=str, help="URL")
 
             args = parser.parse_args()
 
             image_data = args.get('image_data', None)
-            name = args.get('name', None)
+            site_name = args.get('site_name', None)
             url = args.get('url', False)
 
             parent = None
@@ -182,7 +185,7 @@ class Upload(Resource):
                 size=filesize,
                 parent=parent,
                 creator=g.user_id,
-                siteName=name,
+                site_name=site_name,
                 url=url
             )
 
