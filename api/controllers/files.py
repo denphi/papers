@@ -193,6 +193,26 @@ class Upload(Resource):
             abort(500, message="There was an error while processing your request --> {0}".format(e))
 
 
+class Download(Resource):
+    '''
+    download file from website
+    '''
+
+    @login_required
+    @validate_user
+    @belongs_to_user
+    def get(self, file_id):
+        try:
+            file_data = File.find(file_id)
+            # print(file_data)
+            parts = os.path.split(file_data['uri'])
+            file_path = os.path.join(BASE_DIR, parts[0])
+            # print(file_path)
+            return send_from_directory(directory=file_path, filename=parts[1])
+        except Exception as e:
+            abort(500, message="There was an while processing your request --> {0}".format(e))
+
+
 class ViewEditDelete(Resource):
     @login_required
     @validate_user

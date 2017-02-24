@@ -18,6 +18,7 @@ def create_app(env):
     api.add_resource(auth.AuthRegister, '/auth/register')
     api.add_resource(files.CreateList, '/files')
     api.add_resource(files.Upload, '/upload')
+    api.add_resource(files.Download, '/download/<string:file_id>')
     api.add_resource(files.ViewEditDelete, '/files/<string:file_id>')
     api.add_resource(users.List, '/users')
 
