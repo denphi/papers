@@ -66,7 +66,6 @@ rand_str = lambda n: ''.join([random.choice(string.ascii_lowercase) for i in ran
 
 
 def ocr_pipeline(user_token, doc_id):
-    print(user_token)
     data = {
         'user_token': user_token,
         'doc_id': doc_id
@@ -237,9 +236,10 @@ class Download(Resource):
     download file from website
     '''
 
-    @login_required
-    @validate_user
-    @belongs_to_user
+    # FIXME: Pass token to mcs api so it can get image
+    # @login_required
+    # @validate_user
+    # @belongs_to_user
     def get(self, file_id):
         try:
             file_data = File.find(file_id)

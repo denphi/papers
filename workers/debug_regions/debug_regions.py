@@ -4,7 +4,7 @@ import codecs
 import json
 import os
 
-from io import StringIO
+from io import BytesIO
 from PIL import Image, ImageDraw
 from collections import OrderedDict
 from ast import literal_eval as make_tuple
@@ -13,8 +13,6 @@ from celery import Celery
 from celery.utils.log import get_task_logger
 
 API_ENDPOINT = 'http://localhost:5000/api/v1/download'
-
-DEBUG_IMAGE = '../../_TestData/Microsoft_computer-vision-api/bgbill12/bgbill12.png'
 
 DEBUG_OUTPUT_FOLDER = '_Output'
 
@@ -41,7 +39,7 @@ def _get_image(user_token, doc_id):
     r = requests.get(uri, headers=headers)
     logger.info(r.status_code)
 
-    return StringIO(r.content)
+    return BytesIO(r.content)
 
 
 @app.task(name='workers.debug_regions.debug_regions', queue='debug_regions')
@@ -70,8 +68,11 @@ def debug_regions(*args, **kwargs):
         os.makedirs(DEBUG_OUTPUT_FOLDER)
 
     output_filename = "{0}.png".format(args[0][0]['doc_id'])
-    output_filepath = os.path.join(DEBUG_OUTPUT_FOLDER, output_filename)
+    output_filepath = os.path.abspath(os.path.join(DEBUG_OUTPUT_FOLDER, output_filename))
     logger.info(os.path.abspath(output_filepath))
+
+    logger.info(output_filepath)
+
     img.save(output_filepath)
 
     # Show

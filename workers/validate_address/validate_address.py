@@ -12,7 +12,7 @@ DEBUG_POSTCODE_END = u'2RX'
 logger = get_task_logger(__name__)
 app = Celery('validate_address', broker='pyamqp://guest@localhost//')
 
-GOOGLE_API_KEY = '<YOUR_GOOGLE_API_KEY>'
+GOOGLE_API_KEY = 'AIzaSyBRpWc0C_DvxiGfaOu5fITfJgsqPWzevm0'
 
 def get_address_scan(firstname, surname, postcode_end, mcs_data):
     logger.debug(firstname)
