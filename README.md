@@ -89,11 +89,11 @@ python3.6 run.py runserver
 |```GET```|```/api/v1/users```|This endpoint list users||
 |```POST```|```/api/v1/auth/login```|This endpoint login users||
 |```POST```|```/api/v1/auth/register```|This endpoint register users||
-|```GET```|```/api/v1/files/```|This endpoint lists user files|```user_id``` is in JWT.|
-|```POST```|```/api/v1/files/```|This endpoint create new user files|```user_id``` is in JWT.|
+|```GET```|```/api/v1/files```|This endpoint lists user files|```user_id``` is in JWT.|
 |```GET```|```/api/v1/files/<file_id>```|This endpoint gets a single file via ```file_id```|```user_id``` is in JWT.|
 |```PUT```|```/api/v1/files/<file_id>```|This endpoint will be used to edit a single file with id ```file_id```|```user_id``` is in JWT.|
 |```DELETE```|```/api/v1/files/<file_id>```|This endpoint will be used to delete a single file with id ```file_id```|```user_id``` is in JWT.|
+|```POST```|```/api/v1/upload```|This endpoint uploads Base64 encoded images|```user_id``` is in JWT.|
 
 ### List Users
 
