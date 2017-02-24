@@ -1,3 +1,7 @@
+
+import random
+import string
+import base64
 import os
 import re
 
@@ -37,6 +41,9 @@ file_serializer = {
     'date_created': fields.DateTime(dt_format='rfc822'),
     'date_modified': fields.DateTime(dt_format='rfc822')
 }
+
+
+rand_str = lambda n: ''.join([random.choice(string.ascii_lowercase) for i in range(n)])
 
 def is_allowed(filename):
     return '.' in filename and \
@@ -121,6 +128,63 @@ class CreateList(Resource):
 
         except Exception as e:
             abort(500, message="There was an error while processing your request --> {0}".format(e))
+
+
+class Upload(Resource):
+    '''
+    Upload file from website
+    '''
+
+    @login_required
+    @validate_user
+    @marshal_with(file_serializer)
+    def post(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('image_data', type=str, help="Image Base, base64 format")
+            parser.add_argument('name', type=str, help="Site Title")
+            parser.add_argument('url', type=str, help="URL")
+
+            args = parser.parse_args()
+
+            image_data = args.get('image_data', None)
+            name = args.get('name', None)
+            url = args.get('url', False)
+
+            parent = None
+
+            _path = os.path.join(current_app.config['UPLOAD_FOLDER'], g.user_id)
+            _dir = os.path.join(BASE_DIR, "{0}/".format(_path))
+
+            if not os.path.isdir(_dir):
+                os.mkdir(_dir)
+
+            filename = secure_filename("{0}.png".format(rand_str(10)))
+            to_path = os.path.join(_dir, filename)
+
+            pattern = re.compile(r'^data:image/png;base64,', re.IGNORECASE)
+            image_data = re.sub(pattern, '', image_data)
+
+            img_bytes = base64.b64decode(image_data)
+            with open(to_path, 'bw+') as f:
+                f.write(img_bytes)
+
+            print(to_path)
+
+            fileuri = os.path.join("{0}/".format(_path), filename)
+            filesize = os.path.getsize(to_path)
+
+            return File.create(
+                name=filename,
+                uri=fileuri,
+                size=filesize,
+                parent=parent,
+                creator=g.user_id
+            )
+
+        except Exception as e:
+            abort(500, message="There was an error while processing your request --> {0}".format(e))
+
 
 class ViewEditDelete(Resource):
     @login_required
