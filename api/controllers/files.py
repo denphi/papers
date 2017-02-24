@@ -34,6 +34,8 @@ file_serializer = {
     'name': fields.String,
     'size': fields.Integer,
     'uri': fields.String,
+    'siteName': fields.String,
+    'url': fields.String,
     'is_folder': fields.Boolean,
     'objects': fields.Nested(file_array_serializer, default=[]),
     'parent_id': fields.String,
@@ -179,7 +181,9 @@ class Upload(Resource):
                 uri=fileuri,
                 size=filesize,
                 parent=parent,
-                creator=g.user_id
+                creator=g.user_id,
+                siteName=name,
+                url=url
             )
 
         except Exception as e:
