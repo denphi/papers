@@ -5,6 +5,19 @@ import base64
 import os
 import re
 
+from jose import jwt
+from jose.exceptions import JWTError
+
+from kombu import Queue
+from celery import subtask
+from celery import Celery, chain
+from celery.utils.log import get_task_logger
+
+from workers.find_regions.find_regions import find_regions
+from workers.debug_regions.debug_regions import debug_regions
+from workers.mcs_ocr.mcs_ocr import mcs_ocr
+from workers.validate_address.validate_address import validate_address
+
 from flask import current_app, request, g, send_from_directory
 from flask_restful import reqparse, abort, Resource, fields, marshal_with
 from werkzeug import secure_filename
@@ -12,6 +25,8 @@ from werkzeug import secure_filename
 from api.models.file import File
 from api.models.folder import Folder
 from api.utils.decorators import login_required, validate_user, belongs_to_user
+
+logger = get_task_logger(__name__)
 
 BASE_DIR = os.path.abspath(
     os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -48,6 +63,21 @@ file_serializer = {
 
 
 rand_str = lambda n: ''.join([random.choice(string.ascii_lowercase) for i in range(n)])
+
+
+def ocr_pipeline(user_token, doc_id):
+    print(user_token)
+    data = {
+        'user_token': user_token,
+        'doc_id': doc_id
+    }
+
+    ret = chain(mcs_ocr.s(data).set(queue='mcs_ocr'),
+                debug_regions.s().set(queue='debug_regions'),
+                validate_address.s().set(queue='validate_address')).apply_async()
+
+    logger.debug(ret)
+
 
 def is_allowed(filename):
     return '.' in filename and \
@@ -179,7 +209,7 @@ class Upload(Resource):
             fileuri = os.path.join("{0}/".format(_path), filename)
             filesize = os.path.getsize(to_path)
 
-            return File.create(
+            new_file = File.create(
                 name=filename,
                 uri=fileuri,
                 size=filesize,
@@ -188,6 +218,15 @@ class Upload(Resource):
                 site_name=site_name,
                 url=url
             )
+
+            try:
+                token = jwt.encode({'id': g.user_id}, current_app.config['SECRET_KEY'], algorithm='HS256')
+            except JWTError:
+                raise ValidationError("There was a problem while trying to create a JWT token.")
+
+            ocr_pipeline(token, new_file['id'])
+
+            return new_file
 
         except Exception as e:
             abort(500, message="There was an error while processing your request --> {0}".format(e))
