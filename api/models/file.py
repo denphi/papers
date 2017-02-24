@@ -21,6 +21,8 @@ class File(RethinkDBModel):
         uri = kwargs.get('uri')
         parent = kwargs.get('parent')
         creator = kwargs.get('creator')
+        siteName = kwargs.get('siteName')
+        url = kwargs.get('url')
 
         # Direct parent ID
         parent_id = '0' if parent is None else parent['id']
@@ -29,6 +31,8 @@ class File(RethinkDBModel):
             'name': name,
             'size': size,
             'uri': uri,
+            'siteName': siteName,
+            'url': url,            
             'parent_id': parent_id,
             'creator': creator,
             'is_folder': False,
