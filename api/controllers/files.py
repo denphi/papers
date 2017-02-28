@@ -68,10 +68,18 @@ rand_str = lambda n: ''.join([random.choice(string.ascii_lowercase) for i in ran
 def ocr_pipeline(user_token, doc_id):
     data = {
         'user_token': user_token,
-        'doc_id': doc_id
+        'doc_id': doc_id,
+        'find_regions': {
+            'crop': False,
+        },
+        'mscs_vision_api_key': current_app.config['MSCS_VISION_API_KEY'],
+        'google_api_key': current_app.config['GOOGLE_API_KEY'],
+        'debug': False # current_app.config['DEBUG'] # TODO: Implement
     }
 
-    ret = chain(mcs_ocr.s(data).set(queue='mcs_ocr'),
+    # NOTE: DON'T pass args, only kwargs, as decorator 'unpack_chained_kwargs' only works with kwargs.
+    ret = chain(find_regions.s(**data).set(queue='find_regions'),
+                mcs_ocr.s().set(queue='mcs_ocr'),
                 debug_regions.s().set(queue='debug_regions'),
                 validate_address.s().set(queue='validate_address')).apply_async()
 
@@ -236,10 +244,9 @@ class Download(Resource):
     download file from website
     '''
 
-    # FIXME: Pass token to mcs api so it can get image
-    # @login_required
-    # @validate_user
-    # @belongs_to_user
+    @login_required
+    @validate_user
+    @belongs_to_user
     def get(self, file_id):
         try:
             file_data = File.find(file_id)

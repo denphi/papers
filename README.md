@@ -1,7 +1,7 @@
 
 # papers
 
-File sharing service built using Flask, VueJS and RethinkDB
+File sharing service built using Flask, Celery, and RethinkDB
 
 ## References
 
@@ -49,6 +49,10 @@ pip3.6 install -r requirements.txt
 brew update && brew install rethinkdb
 ~~~
 
+## Configuration
+
+Rename ```config.py.example``` to ```config.py``` and edit as needed.
+
 ## Run
 
 ### Set RethinkDB
@@ -94,6 +98,7 @@ python3.6 run.py runserver
 |```PUT```|```/api/v1/files/<file_id>```|This endpoint will be used to edit a single file with id ```file_id```|```user_id``` is in JWT.|
 |```DELETE```|```/api/v1/files/<file_id>```|This endpoint will be used to delete a single file with id ```file_id```|```user_id``` is in JWT.|
 |```POST```|```/api/v1/upload```|This endpoint uploads Base64 encoded images|```user_id``` is in JWT.|
+|```GET```|```/api/v1/download```|This endpoint downloads an image|```user_id``` is in JWT.|
 
 ### List Users
 
@@ -391,6 +396,17 @@ Server: Werkzeug/0.11.15 Python/2.7.13
 Date: Thu, 23 Feb 2017 00:25:03 GMT
 ~~~
 
+## Scripts
+
+~~~
+cd scripts
+
+./upload_base64_file.py temp@test.com temp123 ../_TESTDATA/bgbill12/bgbill12.png
+
+./upload_base64_file.py temp@test.com temp123 ../_TESTDATA/ocr_test_images/64c98c75c795823a1f.png
+~~~
+
 ## NOTES: -
 
-- Test images are from <https://pixabay.com/>
+- Test pictures (```./_TESTDATA/*.jpg```) are from <https://pixabay.com/>
+- Test OCR image (```./_TESTDATA/ocr_test_images/64c98c75c795823a1f.png```) is from <http://eng.wealthfront.com/2015/07/02/testing-with-optical-character-recognition-ocr/>

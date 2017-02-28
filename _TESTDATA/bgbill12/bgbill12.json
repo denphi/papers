@@ -1,0 +1,633 @@
+{
+  "language": "en",
+  "textAngle": 0,
+  "orientation": "Up",
+  "regions": [
+    {
+      "boundingBox": "70,197,356,243",
+      "lines": [
+        {
+          "boundingBox": "70,197,99,16",
+          "words": [
+            {
+              "boundingBox": "70,197,45,16",
+              "text": "John"
+            },
+            {
+              "boundingBox": "122,197,47,16",
+              "text": "Stein"
+            }
+          ]
+        },
+        {
+          "boundingBox": "70,224,224,19",
+          "words": [
+            {
+              "boundingBox": "70,224,30,16",
+              "text": "3rd"
+            },
+            {
+              "boundingBox": "108,224,50,19",
+              "text": "Floor,"
+            },
+            {
+              "boundingBox": "166,224,56,16",
+              "text": "Grove"
+            },
+            {
+              "boundingBox": "230,224,64,19",
+              "text": "House,"
+            }
+          ]
+        },
+        {
+          "boundingBox": "70,250,179,19",
+          "words": [
+            {
+              "boundingBox": "70,250,23,16",
+              "text": "55"
+            },
+            {
+              "boundingBox": "101,250,87,16",
+              "text": "Lowlands"
+            },
+            {
+              "boundingBox": "196,250,53,19",
+              "text": "Road,"
+            }
+          ]
+        },
+        {
+          "boundingBox": "71,277,177,19",
+          "words": [
+            {
+              "boundingBox": "71,277,70,19",
+              "text": "Harrow,"
+            },
+            {
+              "boundingBox": "150,277,98,19",
+              "text": "Middlesex,"
+            }
+          ]
+        },
+        {
+          "boundingBox": "71,303,91,16",
+          "words": [
+            {
+              "boundingBox": "71,303,36,16",
+              "text": "HAI"
+            },
+            {
+              "boundingBox": "117,303,45,16",
+              "text": "3AW"
+            }
+          ]
+        },
+        {
+          "boundingBox": "71,396,355,44",
+          "words": [
+            {
+              "boundingBox": "71,396,96,34",
+              "text": "Your"
+            },
+            {
+              "boundingBox": "181,396,245,44",
+              "text": "EnergyExtra"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "517,89,325,363",
+      "lines": [
+        {
+          "boundingBox": "518,89,324,51",
+          "words": [
+            {
+              "boundingBox": "518,89,194,51",
+              "text": "British"
+            },
+            {
+              "boundingBox": "731,90,111,50",
+              "text": "Gas"
+            }
+          ]
+        },
+        {
+          "boundingBox": "517,155,323,32",
+          "words": [
+            {
+              "boundingBox": "517,155,103,32",
+              "text": "Looking"
+            },
+            {
+              "boundingBox": "630,155,64,26",
+              "text": "after"
+            },
+            {
+              "boundingBox": "701,162,59,25",
+              "text": "your"
+            },
+            {
+              "boundingBox": "767,155,73,26",
+              "text": "world"
+            }
+          ]
+        },
+        {
+          "boundingBox": "518,410,232,18",
+          "words": [
+            {
+              "boundingBox": "518,412,46,16",
+              "text": "Your"
+            },
+            {
+              "boundingBox": "571,414,91,14",
+              "text": "customer"
+            },
+            {
+              "boundingBox": "669,410,81,18",
+              "text": "number:"
+            }
+          ]
+        },
+        {
+          "boundingBox": "519,436,180,16",
+          "words": [
+            {
+              "boundingBox": "519,436,23,16",
+              "text": "85"
+            },
+            {
+              "boundingBox": "550,436,24,16",
+              "text": "00"
+            },
+            {
+              "boundingBox": "582,436,22,16",
+              "text": "17"
+            },
+            {
+              "boundingBox": "611,436,23,16",
+              "text": "85"
+            },
+            {
+              "boundingBox": "643,436,23,16",
+              "text": "17"
+            },
+            {
+              "boundingBox": "676,436,23,16",
+              "text": "17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "70,531,183,208",
+      "lines": [
+        {
+          "boundingBox": "71,531,57,12",
+          "words": [
+            {
+              "boundingBox": "71,531,19,12",
+              "text": "Bill"
+            },
+            {
+              "boundingBox": "94,531,34,12",
+              "text": "date:"
+            }
+          ]
+        },
+        {
+          "boundingBox": "71,549,96,15",
+          "words": [
+            {
+              "boundingBox": "71,550,17,13",
+              "text": "11"
+            },
+            {
+              "boundingBox": "97,549,22,15",
+              "text": "Jul"
+            },
+            {
+              "boundingBox": "126,549,41,14",
+              "text": "2014"
+            }
+          ]
+        },
+        {
+          "boundingBox": "71,603,182,21",
+          "words": [
+            {
+              "boundingBox": "71,603,65,21",
+              "text": "What"
+            },
+            {
+              "boundingBox": "143,603,27,21",
+              "text": "do"
+            },
+            {
+              "boundingBox": "180,604,4,19",
+              "text": "I"
+            },
+            {
+              "boundingBox": "193,603,60,20",
+              "text": "owe?"
+            }
+          ]
+        },
+        {
+          "boundingBox": "70,691,55,18",
+          "words": [
+            {
+              "boundingBox": "70,691,55,18",
+              "text": "Your"
+            }
+          ]
+        },
+        {
+          "boundingBox": "72,715,124,24",
+          "words": [
+            {
+              "boundingBox": "72,717,99,22",
+              "text": "payment"
+            },
+            {
+              "boundingBox": "180,715,16,18",
+              "text": "is"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "256,531,205,199",
+      "lines": [
+        {
+          "boundingBox": "256,531,71,15",
+          "words": [
+            {
+              "boundingBox": "256,531,19,12",
+              "text": "Bill"
+            },
+            {
+              "boundingBox": "280,532,47,14",
+              "text": "period:"
+            }
+          ]
+        },
+        {
+          "boundingBox": "256,549,205,18",
+          "words": [
+            {
+              "boundingBox": "256,549,20,15",
+              "text": "30"
+            },
+            {
+              "boundingBox": "281,550,31,17",
+              "text": "Apr"
+            },
+            {
+              "boundingBox": "318,549,41,14",
+              "text": "2014"
+            },
+            {
+              "boundingBox": "365,557,5,3",
+              "text": "-"
+            },
+            {
+              "boundingBox": "376,549,9,14",
+              "text": "9"
+            },
+            {
+              "boundingBox": "391,549,23,15",
+              "text": "Jul"
+            },
+            {
+              "boundingBox": "420,549,41,14",
+              "text": "2014"
+            }
+          ]
+        },
+        {
+          "boundingBox": "273,696,172,34",
+          "words": [
+            {
+              "boundingBox": "273,696,172,34",
+              "text": "f399.39"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "488,698,45,117",
+      "lines": [
+        {
+          "boundingBox": "508,698,25,38",
+          "words": [
+            {
+              "boundingBox": "508,698,25,38",
+              "text": "3"
+            }
+          ]
+        },
+        {
+          "boundingBox": "488,778,25,37",
+          "words": [
+            {
+              "boundingBox": "488,778,25,37",
+              "text": "4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "71,792,378,78",
+      "lines": [
+        {
+          "boundingBox": "71,792,161,15",
+          "words": [
+            {
+              "boundingBox": "71,792,61,15",
+              "text": "Electricity"
+            },
+            {
+              "boundingBox": "136,792,36,12",
+              "text": "debit:"
+            },
+            {
+              "boundingBox": "179,793,53,11",
+              "text": "E190.26"
+            }
+          ]
+        },
+        {
+          "boundingBox": "71,809,84,11",
+          "words": [
+            {
+              "boundingBox": "71,809,23,11",
+              "text": "Gas"
+            },
+            {
+              "boundingBox": "99,809,23,11",
+              "text": "and"
+            },
+            {
+              "boundingBox": "127,809,28,11",
+              "text": "Ener"
+            }
+          ]
+        },
+        {
+          "boundingBox": "71,843,378,15",
+          "words": [
+            {
+              "boundingBox": "71,844,24,10",
+              "text": "Gas"
+            },
+            {
+              "boundingBox": "100,843,23,11",
+              "text": "and"
+            },
+            {
+              "boundingBox": "128,843,65,15",
+              "text": "electricity"
+            },
+            {
+              "boundingBox": "197,843,35,11",
+              "text": "tariff:"
+            },
+            {
+              "boundingBox": "238,844,32,10",
+              "text": "Price"
+            },
+            {
+              "boundingBox": "275,844,52,10",
+              "text": "Promise"
+            },
+            {
+              "boundingBox": "332,843,25,15",
+              "text": "July"
+            },
+            {
+              "boundingBox": "362,844,36,12",
+              "text": "2014,"
+            },
+            {
+              "boundingBox": "404,843,45,15",
+              "text": "ending"
+            }
+          ]
+        },
+        {
+          "boundingBox": "71,858,76,12",
+          "words": [
+            {
+              "boundingBox": "71,859,13,11",
+              "text": "31"
+            },
+            {
+              "boundingBox": "91,858,18,12",
+              "text": "Jul"
+            },
+            {
+              "boundingBox": "115,859,32,11",
+              "text": "2014"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "560,603,407,253",
+      "lines": [
+        {
+          "boundingBox": "560,603,193,28",
+          "words": [
+            {
+              "boundingBox": "560,603,74,22",
+              "text": "When"
+            },
+            {
+              "boundingBox": "643,603,29,22",
+              "text": "do"
+            },
+            {
+              "boundingBox": "682,604,4,20",
+              "text": "I"
+            },
+            {
+              "boundingBox": "697,603,56,28",
+              "text": "pay?"
+            }
+          ]
+        },
+        {
+          "boundingBox": "561,681,235,21",
+          "words": [
+            {
+              "boundingBox": "561,682,47,16",
+              "text": "Your"
+            },
+            {
+              "boundingBox": "615,684,85,18",
+              "text": "payment"
+            },
+            {
+              "boundingBox": "707,681,14,17",
+              "text": "is"
+            },
+            {
+              "boundingBox": "728,681,37,17",
+              "text": "due"
+            },
+            {
+              "boundingBox": "773,681,23,21",
+              "text": "by"
+            }
+          ]
+        },
+        {
+          "boundingBox": "562,707,135,32",
+          "words": [
+            {
+              "boundingBox": "562,707,65,25",
+              "text": "25th"
+            },
+            {
+              "boundingBox": "639,707,58,32",
+              "text": "July"
+            }
+          ]
+        },
+        {
+          "boundingBox": "562,751,405,20",
+          "words": [
+            {
+              "boundingBox": "562,752,27,19",
+              "text": "Pay"
+            },
+            {
+              "boundingBox": "595,752,18,19",
+              "text": "by"
+            },
+            {
+              "boundingBox": "618,752,28,14",
+              "text": "this"
+            },
+            {
+              "boundingBox": "651,752,35,14",
+              "text": "date"
+            },
+            {
+              "boundingBox": "692,752,29,14",
+              "text": "and"
+            },
+            {
+              "boundingBox": "727,752,41,19",
+              "text": "you'll"
+            },
+            {
+              "boundingBox": "774,751,56,15",
+              "text": "benefit"
+            },
+            {
+              "boundingBox": "834,751,37,15",
+              "text": "from"
+            },
+            {
+              "boundingBox": "877,756,26,10",
+              "text": "our"
+            },
+            {
+              "boundingBox": "909,752,58,18",
+              "text": "Prompt"
+            }
+          ]
+        },
+        {
+          "boundingBox": "562,772,277,19",
+          "words": [
+            {
+              "boundingBox": "562,773,68,18",
+              "text": "Payment"
+            },
+            {
+              "boundingBox": "635,772,67,15",
+              "text": "discount"
+            },
+            {
+              "boundingBox": "707,777,20,10",
+              "text": "on"
+            },
+            {
+              "boundingBox": "733,777,34,14",
+              "text": "your"
+            },
+            {
+              "boundingBox": "773,775,34,12",
+              "text": "next"
+            },
+            {
+              "boundingBox": "812,772,27,15",
+              "text": "bill."
+            }
+          ]
+        },
+        {
+          "boundingBox": "574,816,212,19",
+          "words": [
+            {
+              "boundingBox": "574,817,3,13",
+              "text": "I"
+            },
+            {
+              "boundingBox": "583,819,38,12",
+              "text": "want"
+            },
+            {
+              "boundingBox": "626,819,16,12",
+              "text": "to"
+            },
+            {
+              "boundingBox": "648,816,57,19",
+              "text": "change"
+            },
+            {
+              "boundingBox": "711,816,32,15",
+              "text": "how"
+            },
+            {
+              "boundingBox": "750,817,2,13",
+              "text": "I"
+            },
+            {
+              "boundingBox": "759,821,27,14",
+              "text": "pay"
+            }
+          ]
+        },
+        {
+          "boundingBox": "574,838,86,18",
+          "words": [
+            {
+              "boundingBox": "574,838,29,14",
+              "text": "See"
+            },
+            {
+              "boundingBox": "609,840,35,16",
+              "text": "step"
+            },
+            {
+              "boundingBox": "650,838,10,14",
+              "text": "6"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

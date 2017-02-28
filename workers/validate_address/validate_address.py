@@ -1,18 +1,26 @@
 import os
 import requests
 import json
+import sys
 
 from celery import Celery
 from celery.utils.log import get_task_logger
+
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+
+from utils.decorators import unpack_chained_kwargs
+
 
 DEBUG_FIRSTNAME = u'John'
 DEBUG_SURNAME = u'Stein'
 DEBUG_POSTCODE_END = u'2RX'
 
 logger = get_task_logger(__name__)
-app = Celery('validate_address', broker='pyamqp://guest@localhost//')
+app = Celery('validate_address')
+app.config_from_object('celeryconfig')
 
-GOOGLE_API_KEY = 'AIzaSyBRpWc0C_DvxiGfaOu5fITfJgsqPWzevm0'
 
 def get_address_scan(firstname, surname, postcode_end, mcs_data):
     logger.debug(firstname)
@@ -49,17 +57,20 @@ def get_address_scan(firstname, surname, postcode_end, mcs_data):
 
 
 @app.task(name='workers.validate_address.validate_address', queue='validate_address')
+@unpack_chained_kwargs
 def validate_address(*args, **kwargs):
-    logger.info(args[0])
+    debug = kwargs.get('debug', 'False')
+    logger.warn(debug)
+
     address = get_address_scan(DEBUG_FIRSTNAME,
                                DEBUG_SURNAME,
                                DEBUG_POSTCODE_END,
-                               args[0][0][0]['mcs_data']) # FIX: arg get boxed with each call
+                               kwargs['mcs_data'])
 
     # Validate address
     logger.debug(address)
     url_addr = "https://maps.googleapis.com/maps/api/geocode/json"
-    payload = {'address': address, 'key': 'AIzaSyBRpWc0C_DvxiGfaOu5fITfJgsqPWzevm0'}
+    payload = {'address': address, 'key': kwargs['google_api_key']}
     res = requests.get(url_addr, params=payload)
     logger.debug(res.url)
     out = res.json()
@@ -78,4 +89,5 @@ def validate_address(*args, **kwargs):
 
     # return google_address, partial_match
 
-    return args
+    # Only return one value of type dict. Otherwise subsequent workers decorated with 'unpack_chained_kwargs' will fail.
+    return kwargs

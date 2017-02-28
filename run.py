@@ -8,8 +8,8 @@ from flask_script import Manager
 from api import create_app
 
 app = create_app('development')
-
 manager = Manager(app)
+
 
 @manager.command
 def migrate():
@@ -36,6 +36,7 @@ def migrate():
         print("Running RethinkDB migration command")
     except Exception as e:
         cprint("An error occured --> {0}".format(e), 'red', attrs=['bold'])
+
 
 @manager.command
 def drop_db():

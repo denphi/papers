@@ -1,5 +1,5 @@
 
-# Microsoft OCR
+# Microsoft OCR .NET API
 
 ## Run
 

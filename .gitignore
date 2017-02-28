@@ -1,4 +1,8 @@
 
+config.py
+
+_Output
+
 rethinkdb_data/*
 
 upload/*
