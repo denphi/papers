@@ -35,7 +35,7 @@ app.config_from_object('celeryconfig')
 @unpack_chained_kwargs
 def find_regions(*args, **kwargs):
     debug = kwargs.get('debug', 'False')
-    logger.warn(debug)
+    logger.warn("Debug: {0}".format(debug))
 
     lower_val = 0 # Lower black pixel
     upper_val = 128 # Upper white pixel

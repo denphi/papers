@@ -60,7 +60,7 @@ def get_address_scan(firstname, surname, postcode_end, mcs_data):
 @unpack_chained_kwargs
 def validate_address(*args, **kwargs):
     debug = kwargs.get('debug', 'False')
-    logger.warn(debug)
+    logger.warn("Debug: {0}".format(debug))
 
     address = get_address_scan(DEBUG_FIRSTNAME,
                                DEBUG_SURNAME,

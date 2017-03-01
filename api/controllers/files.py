@@ -10,6 +10,7 @@ from jose.exceptions import JWTError
 
 from kombu import Queue
 from celery import subtask
+from celery.utils import uuid
 from celery import Celery, chain
 from celery.utils.log import get_task_logger
 
@@ -74,16 +75,21 @@ def ocr_pipeline(user_token, doc_id):
         },
         'mscs_vision_api_key': current_app.config['MSCS_VISION_API_KEY'],
         'google_api_key': current_app.config['GOOGLE_API_KEY'],
-        'debug': False # current_app.config['DEBUG'] # TODO: Implement
+        'debug': current_app.config['DEBUG']
     }
 
+    first_task_id = uuid()
+    logger.debug(first_task_id)
+
     # NOTE: DON'T pass args, only kwargs, as decorator 'unpack_chained_kwargs' only works with kwargs.
-    ret = chain(find_regions.s(**data).set(queue='find_regions'),
+    ret = chain(find_regions.s(**data, task_id=first_task_id).set(queue='find_regions'),
                 mcs_ocr.s().set(queue='mcs_ocr'),
                 debug_regions.s().set(queue='debug_regions'),
                 validate_address.s().set(queue='validate_address')).apply_async()
 
     logger.debug(ret)
+
+    return first_task_id
 
 
 def is_allowed(filename):
@@ -231,7 +237,8 @@ class Upload(Resource):
             except JWTError:
                 raise ValidationError("There was a problem while trying to create a JWT token.")
 
-            ocr_pipeline(token, new_file['id'])
+            first_task_id = ocr_pipeline(token, new_file['id'])
+            logger.warn('first_task_id')
 
             return new_file
 

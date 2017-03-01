@@ -39,7 +39,7 @@ def _debug():
 @unpack_chained_kwargs
 def mcs_ocr(*args, **kwargs):
     debug = kwargs.get('debug', 'False')
-    logger.warn(debug)
+    logger.warn("Debug: {0}".format(debug))
 
     if debug:
         kwargs['mcs_data'] = _debug()

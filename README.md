@@ -69,10 +69,16 @@ rethinkdb
 python3.6 run.py migrate
 ~~~
 
-### Run Applications
+### Run Application
 
 ~~~
 python3.6 run.py runserver
+~~~
+
+### Run Application, on specific port and host 0.0.0.0, to allow network access
+
+~~~
+python3.6 run.py runserver --host=0.0.0.0 --port=8081
 ~~~
 
 ### Run Argument

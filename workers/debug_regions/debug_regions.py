@@ -37,7 +37,7 @@ def _calc_rect(rect_string):
 @unpack_chained_kwargs
 def debug_regions(*args, **kwargs):
     debug = kwargs.get('debug', 'False')
-    logger.warn(debug)
+    logger.warn("Debug: {0}".format(debug))
 
     img_data = get_image(kwargs['user_token'], kwargs['doc_id'])
     img = Image.open(img_data)

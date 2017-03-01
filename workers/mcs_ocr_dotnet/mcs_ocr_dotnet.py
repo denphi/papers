@@ -27,7 +27,7 @@ app.config_from_object('celeryconfig')
 @app.task(name='workers.mcs_ocr_dotnet.mcs_ocr_dotnet', queue='mcs_ocr_dotnet')
 def mcs_ocr_dotnet(*args, **kwargs):
     debug = kwargs.get('debug', 'False')
-    logger.warn(debug)
+    logger.warn("Debug: {0}".format(debug))
 
     uri = "{0}/{1}".format(API_ENDPOINT, kwargs['doc_id'])
     logger.info(uri)
