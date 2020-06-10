@@ -1,15 +1,14 @@
 import inspect
 import importlib
 from rethinkdb import r
-from termcolor import cprint
 
 from flask_script import Manager
 
 from api import create_app
 
 app = create_app('development')
-manager = Manager(app)
 
+manager = Manager(app)
 
 @manager.command
 def migrate():
@@ -35,8 +34,7 @@ def migrate():
                     print("Created table '{0}'...".format(table_name))
         print("Running RethinkDB migration command")
     except Exception as e:
-        cprint("An error occured --> {0}".format(e), 'red', attrs=['bold'])
-
+        print("An error occured --> {0}".format(e))
 
 @manager.command
 def drop_db():
@@ -49,7 +47,7 @@ def drop_db():
         if db_name in r.db_list().run(conn):
             r.db_drop(db_name).run(conn)
     except Exception as e:
-        cprint("An error occured --> {0}".format(e), 'red', attrs=['bold'])
+        print("An error occured --> {0}".format(e))
 
 if __name__ == '__main__':
     manager.run()

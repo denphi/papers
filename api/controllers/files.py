@@ -5,20 +5,6 @@ import base64
 import os
 import re
 
-from jose import jwt
-from jose.exceptions import JWTError
-
-from kombu import Queue
-from celery import subtask
-from celery.utils import uuid
-from celery import Celery, chain
-from celery.utils.log import get_task_logger
-
-from workers.find_regions.find_regions import find_regions
-from workers.debug_regions.debug_regions import debug_regions
-from workers.mcs_ocr.mcs_ocr import mcs_ocr
-from workers.validate_address.validate_address import validate_address
-
 from flask import current_app, request, g, send_from_directory
 from flask_restful import reqparse, abort, Resource, fields, marshal_with
 from werkzeug import secure_filename
@@ -26,8 +12,6 @@ from werkzeug import secure_filename
 from api.models.file import File
 from api.models.folder import Folder
 from api.utils.decorators import login_required, validate_user, belongs_to_user
-
-logger = get_task_logger(__name__)
 
 BASE_DIR = os.path.abspath(
     os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -41,8 +25,6 @@ file_array_serializer = {
     'is_folder': fields.Boolean,
     'parent_id': fields.String,
     'creator': fields.String,
-    'site_name': fields.String,
-    'url': fields.String,
     'date_created': fields.DateTime(dt_format='rfc822'),
     'date_modified': fields.DateTime(dt_format='rfc822')
 }
@@ -52,7 +34,7 @@ file_serializer = {
     'name': fields.String,
     'size': fields.Integer,
     'uri': fields.String,
-    'site_name': fields.String,
+    'siteName': fields.String,
     'url': fields.String,
     'is_folder': fields.Boolean,
     'objects': fields.Nested(file_array_serializer, default=[]),
@@ -64,33 +46,6 @@ file_serializer = {
 
 
 rand_str = lambda n: ''.join([random.choice(string.ascii_lowercase) for i in range(n)])
-
-
-def ocr_pipeline(user_token, doc_id):
-    data = {
-        'user_token': user_token,
-        'doc_id': doc_id,
-        'find_regions': {
-            'crop': False,
-        },
-        'mscs_vision_api_key': current_app.config['MSCS_VISION_API_KEY'],
-        'google_api_key': current_app.config['GOOGLE_API_KEY'],
-        'debug': current_app.config['DEBUG']
-    }
-
-    first_task_id = uuid()
-    logger.debug(first_task_id)
-
-    # NOTE: DON'T pass args, only kwargs, as decorator 'unpack_chained_kwargs' only works with kwargs.
-    ret = chain(find_regions.s(**data, task_id=first_task_id).set(queue='find_regions'),
-                mcs_ocr.s().set(queue='mcs_ocr'),
-                debug_regions.s().set(queue='debug_regions'),
-                validate_address.s().set(queue='validate_address')).apply_async()
-
-    logger.debug(ret)
-
-    return first_task_id
-
 
 def is_allowed(filename):
     return '.' in filename and \
@@ -158,8 +113,7 @@ class CreateList(Resource):
                     if not os.path.isdir(_dir):
                         os.mkdir(_dir)
 
-                    filetitle, fileext = os.path.splitext(files.filename)
-                    filename = secure_filename("{0}_{1}{2}".format(filetitle, rand_str(10), fileext))
+                    filename = secure_filename(files.filename)
                     to_path = os.path.join(_dir, filename)
                     files.save(to_path)
                     fileuri = os.path.join("{0}/".format(_path), filename)
@@ -190,13 +144,13 @@ class Upload(Resource):
         try:
             parser = reqparse.RequestParser()
             parser.add_argument('image_data', type=str, help="Image Base, base64 format")
-            parser.add_argument('site_name', type=str, help="Site Title")
+            parser.add_argument('name', type=str, help="Site Title")
             parser.add_argument('url', type=str, help="URL")
 
             args = parser.parse_args()
 
             image_data = args.get('image_data', None)
-            site_name = args.get('site_name', None)
+            name = args.get('name', None)
             url = args.get('url', False)
 
             parent = None
@@ -222,48 +176,18 @@ class Upload(Resource):
             fileuri = os.path.join("{0}/".format(_path), filename)
             filesize = os.path.getsize(to_path)
 
-            new_file = File.create(
+            return File.create(
                 name=filename,
                 uri=fileuri,
                 size=filesize,
                 parent=parent,
                 creator=g.user_id,
-                site_name=site_name,
+                siteName=name,
                 url=url
             )
 
-            try:
-                token = jwt.encode({'id': g.user_id}, current_app.config['SECRET_KEY'], algorithm='HS256')
-            except JWTError:
-                raise ValidationError("There was a problem while trying to create a JWT token.")
-
-            first_task_id = ocr_pipeline(token, new_file['id'])
-            logger.warn('first_task_id')
-
-            return new_file
-
         except Exception as e:
             abort(500, message="There was an error while processing your request --> {0}".format(e))
-
-
-class Download(Resource):
-    '''
-    download file from website
-    '''
-
-    @login_required
-    @validate_user
-    @belongs_to_user
-    def get(self, file_id):
-        try:
-            file_data = File.find(file_id)
-            # print(file_data)
-            parts = os.path.split(file_data['uri'])
-            file_path = os.path.join(BASE_DIR, parts[0])
-            # print(file_path)
-            return send_from_directory(directory=file_path, filename=parts[1])
-        except Exception as e:
-            abort(500, message="There was an while processing your request --> {0}".format(e))
 
 
 class ViewEditDelete(Resource):

@@ -2,18 +2,18 @@ import os
 import re
 
 import rethinkdb as r
-from jose import jwt
-from jose.exceptions import JWTError
+import jwt
+from jwt.exceptions import PyJWTError as JWTError 
+
 from datetime import datetime
 from passlib.hash import pbkdf2_sha256
 
 from flask import current_app
-
 from api.utils.errors import ValidationError, DatabaseProcessError, UnavailableContentError
-
 from api.models.RethinkDBModel import RethinkDBModel
 
-conn = r.connect(db='papers')
+rdb = r.RethinkDB()
+conn = rdb.connect(db='papers')
 
 class User(RethinkDBModel):
     _table = 'users'
@@ -51,21 +51,21 @@ class User(RethinkDBModel):
                 'country': country,
                 'postal_code': postal_code
             },
-            'date_created': datetime.now(r.make_timezone('+01:00')),
-            'date_modified': datetime.now(r.make_timezone('+01:00')),
+            'date_created': datetime.now(rdb.make_timezone('+01:00')),
+            'date_modified': datetime.now(rdb.make_timezone('+01:00')),
         }
 
         print(doc)
 
-        users = list(r.table(cls._table).filter({'email': email}).run(conn))
+        users = list(rdb.table(cls._table).filter({'email': email}).run(conn))
         if len(users):
             raise ValidationError("Could already exists with e-mail address: {0}".format(email))
 
-        r.table(cls._table).insert(doc).run(conn)
+        rdb.table(cls._table).insert(doc).run(conn)
 
     @classmethod
     def validate(cls, email, password):
-        docs = list(r.table(cls._table).filter({'email': email}).run(conn))
+        docs = list(rdb.table(cls._table).filter({'email': email}).run(conn))
 
         if not len(docs):
             raise ValidationError("Could not find the e-mail address you specified")
@@ -83,7 +83,7 @@ class User(RethinkDBModel):
 
     @classmethod
     def get_all(cls):
-        return list(r.table(cls._table).run(conn))
+        return list(rdb.table(cls._table).run(conn))
 
     @staticmethod
     def hash_password(password):

@@ -1,7 +1,11 @@
 import re
 
-from jose import jwt
-from jose.exceptions import JWTError
+#from jose import jwt
+#from jose.exceptions import JWTError
+
+import jwt
+from jwt.exceptions import PyJWTError as JWTError   
+
 from functools import wraps
 
 from flask import current_app, request, g

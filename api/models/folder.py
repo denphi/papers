@@ -2,17 +2,18 @@ import os
 import re
 
 import rethinkdb as r
-from jose import jwt
-from jose.exceptions import JWTError
+import jwt
+from jwt.exceptions import PyJWTError as JWTError
+
 from datetime import datetime
-from passlib.hash import pbkdf2_sha256
 
 from flask import current_app
 
 from api.models.RethinkDBModel import RethinkDBModel
 from api.models.file import File
 
-conn = r.connect(db='papers')
+rdb = r.RethinkDB()
+conn = rdb.connect(db='papers')
 
 class Folder(File):
     @classmethod
@@ -32,11 +33,11 @@ class Folder(File):
             'last_index': 0,
             'status': True,
             'objects': None,
-            'date_created': datetime.now(r.make_timezone('+01:00')),
-            'date_modified': datetime.now(r.make_timezone('+01:00'))
+            'date_created': datetime.now(rdb.make_timezone('+01:00')),
+            'date_modified': datetime.now(rdb.make_timezone('+01:00'))
         }
 
-        res = r.table(cls._table).insert(doc).run(conn)
+        res = rdb.table(cls._table).insert(doc).run(conn)
         doc['id'] = res['generated_keys'][0]
 
         if parent is not None:
