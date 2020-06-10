@@ -13,7 +13,7 @@ from api.models.RethinkDBModel import RethinkDBModel
 from api.models.file import File
 
 rdb = r.RethinkDB()
-conn = rdb.connect(db='papers')
+conn = rdb.connect(db=current_app.config['DATABASE_NAME'])
 
 class Folder(File):
     @classmethod

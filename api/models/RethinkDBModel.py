@@ -8,7 +8,7 @@ from flask import current_app
 from api.utils.errors import ValidationError, DatabaseProcessError, UnavailableContentError
 
 rdb = r.RethinkDB()
-conn = rdb.connect(db='papers')
+conn = rdb.connect(db=current_app.config['DATABASE_NAME'])
 
 class RethinkDBModel(object):
 

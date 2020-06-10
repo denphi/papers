@@ -13,7 +13,7 @@ from api.utils.errors import ValidationError, DatabaseProcessError, UnavailableC
 from api.models.RethinkDBModel import RethinkDBModel
 
 rdb = r.RethinkDB()
-conn = rdb.connect(db='papers')
+conn = rdb.connect(db=current_app.config['DATABASE_NAME'])
 
 class User(RethinkDBModel):
     _table = 'users'
